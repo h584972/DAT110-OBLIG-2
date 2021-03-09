@@ -2,11 +2,24 @@ package no.hvl.dat110.messages;
 
 public class CreateTopicMsg extends Message {
 	
-	// message sent from client to create topic on the broker
+	private String tema;
+
+	public CreateTopicMsg(String bruker, String tema) {
+		super(MessageType.CREATETOPIC, bruker);
+		this.tema = tema;
+		
+	}
+
+	public String getTema() {
+		return tema;
+	}
+
+	public void setTema(String topic) {
+		this.tema = topic;
+	}
 	
-	// TODO: 
-	// Implement object variables - a topic is required
-	
-	// Constructor, get/set-methods, and toString method
-    // as described in the project text	
+	@Override
+	public String toString() {
+		return "CreateTopicMsg [Tema=" + tema + "]";
+	}
 }

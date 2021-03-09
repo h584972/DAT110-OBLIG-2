@@ -1,11 +1,13 @@
 package no.hvl.dat110.broker;
 
+
 import java.util.Collection;
+import java.util.HashSet;
+
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import no.hvl.dat110.common.TODO;
-import no.hvl.dat110.common.Logger;
+import no.hvl.dat110.messages.Message;
 import no.hvl.dat110.messagetransport.Connection;
 
 public class Storage {
@@ -18,6 +20,8 @@ public class Storage {
 	// maps from user to corresponding client session object
 	
 	protected ConcurrentHashMap<String, ClientSession> clients;
+	
+	protected ConcurrentHashMap<String, Set<Message>> buffer;
 
 	public Storage() {
 		subscriptions = new ConcurrentHashMap<String, Set<String>>();
@@ -52,48 +56,72 @@ public class Storage {
 
 	public void addClientSession(String user, Connection connection) {
 
-		// TODO: add corresponding client session to the storage
-		
-		throw new UnsupportedOperationException(TODO.method());
+		ClientSession cs = new ClientSession(user, connection);
+
+		if (!clients.containsKey(user)) {
+			clients.put(user, cs);
+		}
 		
 	}
 
 	public void removeClientSession(String user) {
 
-		// TODO: remove client session for user from the storage
-
-		throw new UnsupportedOperationException(TODO.method());
+		if (clients.containsKey(user)) {
+			clients.remove(user);
+		}
 		
 	}
 
 	public void createTopic(String topic) {
 
-		// TODO: create topic in the storage
-
-		throw new UnsupportedOperationException(TODO.method());
+		if (!subscriptions.containsKey(topic)) {
+				Set<String> følgere = ConcurrentHashMap.newKeySet();
+				subscriptions.put(topic, følgere);
+		}
 	
 	}
 
 	public void deleteTopic(String topic) {
 
-		// TODO: delete topic from the storage
-
-		throw new UnsupportedOperationException(TODO.method());
+		if (subscriptions.containsKey(topic)) {
+			subscriptions.remove(topic);
+		}
 		
 	}
 
 	public void addSubscriber(String user, String topic) {
 
-		// TODO: add the user as subscriber to the topic
-		
-		throw new UnsupportedOperationException(TODO.method());
+		if (subscriptions.containsKey(topic)) {
+			Set<String> følgere = subscriptions.get(topic);
+			følgere.add(user);
+			subscriptions.replace(topic, følgere);
+
+		}
 		
 	}
 
 	public void removeSubscriber(String user, String topic) {
-
-		// TODO: remove the user as subscriber to the topic
-
-		throw new UnsupportedOperationException(TODO.method());
+		
+		if (subscriptions.containsKey(topic)) {
+			Set<String> følgere = subscriptions.get(topic);
+			if(følgere.contains(user)) {
+				følgere.remove(user);
+				subscriptions.replace(topic, følgere);
+			}
+		}
 	}
+	
+	public void addBufferMessage(String user, Message msg){
+		if (!buffer.containsKey(user)) {
+			Set<Message> msgset = new HashSet<Message>();
+			msgset.add(msg);
+			buffer.put(user, msgset);
+		} else {
+			buffer.get(user).add(msg);
+		}
+	}
+	
+	
+
+	
 }

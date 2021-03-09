@@ -9,5 +9,25 @@ public class UnsubscribeMsg extends Message {
 
 	// Constructor, get/set-methods, and toString method
 	// as described in the project text
+	private String tema;
+
+	public UnsubscribeMsg(String bruker, String tema) {
+		super(MessageType.UNSUBSCRIBE, bruker);
+		this.tema = tema;
+	}
+
+	public String getTema() {
+		return tema;
+	}
+
+	public void setTema(String tema) {
+		this.tema = tema;
+	}
+
+	@Override
+	public String toString() {
+		return "UnsubscribeMsg [tema=" + tema + "]";
+	}
+	
 	
 }
