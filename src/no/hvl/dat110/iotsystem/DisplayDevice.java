@@ -23,7 +23,7 @@ public class DisplayDevice {
 		for (int i = 0; i < COUNT; i++) {
 
 			PublishMsg melding = (PublishMsg) klient.receive();
-			System.out.println("Temperatur er: " + melding.getMelding());
+			System.out.println("Temperatur er: " + melding.getMessage());
 
 			try {
 				Thread.sleep(1000);

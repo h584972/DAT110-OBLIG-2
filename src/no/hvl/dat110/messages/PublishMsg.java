@@ -5,34 +5,34 @@ import no.hvl.dat110.common.TODO;
 public class PublishMsg extends Message {
 	
 	
-	private String melding;
-	private String tema;
+	private String message;
+	private String topic;
 	
-	public PublishMsg(String bruker, String melding, String tema) {
-		super(MessageType.PUBLISH, bruker);
-		this.melding = melding;
-		this.tema = tema;
+	public PublishMsg(String user,String topic, String message) {
+		super(MessageType.PUBLISH, user);
+		this.message = message;
+		this.topic= topic;
 	}
 
-	public String getMelding() {
-		return melding;
+	public String getMessage() {
+		return message;
 	}
 
-	public void setMelding(String melding) {
-		this.melding = melding;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
-	public String getTema() {
-		return tema;
+	public String getTopic() {
+		return topic;
 	}
 
-	public void setTema(String tema) {
-		this.tema = tema;
+	public void setTopic(String topic) {
+		this.topic = topic;
 	}
 
 	@Override
 	public String toString() {
-		return "PublishMsg [melding=" + melding + ", tema=" + tema + "]";
+		return "PublishMsg [melding=" + message + ", tema=" + topic + "]";
 	}
 
 	
